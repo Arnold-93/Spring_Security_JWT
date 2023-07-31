@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class UserService implements IUserService {
 
     private final PasswordEncoder passwordEncoder;
+
     private final UserRepository userRepository;
 
     @Override

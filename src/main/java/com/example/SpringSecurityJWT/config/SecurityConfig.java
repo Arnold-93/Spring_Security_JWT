@@ -10,7 +10,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,9 +19,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity)throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf( e -> e.disable() ) //le indicamos que desabilita, Cross-Site Request Forgery intercepta la comunicacion
+                .csrf(e -> e.disable()) //le indicamos que desabilita, Cross-Site Request Forgery intercepta la comunicacion
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/user/hello").permitAll(); // le decimos que permita el acceso sin pedir login al path descripto
                     auth.anyRequest().authenticated(); // le decimos que niegue el acceso a los demás servicios, se deben autenticar
@@ -37,9 +36,9 @@ public class SecurityConfig {
 
     /**
      * Creamos un usuario en memoria
-     * */
+     */
     @Bean
-    UserDetailsService userDetailsService(){
+    UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager mannager = new InMemoryUserDetailsManager();
         mannager.createUser(User.withUsername("asaavedra")
                 .password("1234")
@@ -52,9 +51,9 @@ public class SecurityConfig {
 
     /**
      * Creamos una politica de encriptacion de password con PasswordEncoder
-     * */
+     */
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         //Encriptamos la constraseña
         return new BCryptPasswordEncoder();
     }
@@ -63,9 +62,9 @@ public class SecurityConfig {
     /**
      * Se encarga de administrar la autenticacion en nuestra aplicacion
      * Esta autenticacion nos obliga a tener una contraseña encriptada
-     * */
+     */
     @Bean
-    AuthenticationManager authenticationManager( HttpSecurity httpSecurity, PasswordEncoder passwordEncoder) throws Exception{
+    AuthenticationManager authenticationManager(HttpSecurity httpSecurity, PasswordEncoder passwordEncoder) throws Exception {
         return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailsService())
                 .passwordEncoder(passwordEncoder)
