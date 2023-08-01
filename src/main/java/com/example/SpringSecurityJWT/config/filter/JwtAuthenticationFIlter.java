@@ -20,13 +20,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 @AllArgsConstructor
 @Slf4j
 //UsernamePasswordAuthenticationFilter nos va ayudar autenticar en nuestra app
-public class jwtAuthenticationFIlter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthenticationFIlter extends UsernamePasswordAuthenticationFilter {
 
     private final JwUtil jwUtil;
 
@@ -91,7 +90,7 @@ public class jwtAuthenticationFIlter extends UsernamePasswordAuthenticationFilte
         httpResponse.put("Message", "Authorization Correcta");
         httpResponse.put("Username", user.getUsername());
 
-        //devolvemos la data previamente construida en un objeto
+        //devolvemos la data previamente construida en un objeto en el body
         response.getWriter().write(new ObjectMapper().writeValueAsString(httpResponse));
 
         //Agregamos parametros a la repuesta (status: 200, type: application/json )

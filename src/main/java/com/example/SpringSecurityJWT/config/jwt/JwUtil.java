@@ -1,5 +1,6 @@
 package com.example.SpringSecurityJWT.config.jwt;
 
+import com.example.SpringSecurityJWT.infrastructure.servicios.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,9 +18,9 @@ import java.util.function.Function;
 @Slf4j
 public class JwUtil {
 
-    @Value("${jwt.secret.key")
+    @Value("${jwt.secret.key}")
     private String secretKey; //firma
-    @Value("${jwt.time.expiration")
+    @Value("${jwt.time.expiration}")
     private String timeExpiration; //tiempo de expiracion
 
     /**
